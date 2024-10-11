@@ -1,0 +1,19 @@
+﻿@page "/Exo3"
+@using DemoWASM.Models
+<h3>Games</h3>
+
+<table class="table table-striped">
+    @foreach (Game u in Liste)
+    {
+        <tr>
+            <td>@u.Id</td>
+            <td>@u.Title</td>
+            <td>@u.ReleaseYear</td>
+            <td>@u.Synopsis</td>
+        </tr>
+    }
+</table>
+
+@code {
+
+}
