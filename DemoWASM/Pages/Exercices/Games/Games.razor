@@ -2,18 +2,39 @@
 @using DemoWASM.Models
 <h3>Games</h3>
 
-<table class="table table-striped">
-    @foreach (Game u in Liste)
-    {
-        <tr>
-            <td>@u.Id</td>
-            <td>@u.Title</td>
-            <td>@u.ReleaseYear</td>
-            <td>@u.Synopsis</td>
-        </tr>
-    }
-</table>
+<AuthorizeView Roles="User, Admin">
+    <Authorized>
+        <button class="btn btn-primary" @onclick="Add">Add</button>
+        <hr />
+        <table class="table table-striped">
+            @foreach (Game g in Liste)
+            {
+                <tr>
+                    <td>@g.Id</td>
+                    <td>@g.Title</td>
+                    <td>@g.ReleaseYear</td>
+                    <td>@g.Synopsis</td>
+                    @if (@User.IsInRole("Admin"))
+                    {
+                        <td class="btn-group"><button class="btn btn-danger" @onclick="Delete">Delete</button></td>
+                    }
+                </tr>
+            }
+        </table>
+    </Authorized>
+    <NotAuthorized>
+        <table class="table table-striped">
+            @foreach (Game u in Liste)
+            {
+                <tr>
+                    <td>@u.Id</td>
+                    <td>@u.Title</td>
+                    <td>@u.ReleaseYear</td>
+                    <td>@u.Synopsis</td>
+                </tr>
+            }
+        </table>
+    </NotAuthorized>
+</AuthorizeView>
 
-@code {
 
-}

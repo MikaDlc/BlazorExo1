@@ -1,0 +1,35 @@
+﻿@page "/Exo3/Add"
+@attribute [Authorize(Roles = "User, Admin")]
+<h3>GameAdd</h3>
+
+<div class="card">
+    <div class="card-title bg-info">
+        Ajout d'un Game
+    </div>
+    <div class="card-body">
+        <EditForm Model="GameForm" OnValidSubmit="Add">
+            <DataAnnotationsValidator />
+            <div>
+                Titre : <InputText class="form-control form-control-sm" @bind-Value="GameForm.Title" />
+                <ValidationMessage For="() => GameForm.Title" />
+            </div>
+            <div>
+                Année de sortie : <InputNumber class="form-control form-control-sm" @bind-Value="GameForm.ReleaseYear" />
+                <ValidationMessage For="() => GameForm.ReleaseYear" />
+            </div>
+            <div>
+                Description : <InputText class="form-control form-control-sm" @bind-Value="GameForm.Synopsis" />
+                <ValidationMessage For="() => GameForm.Synopsis" />
+            </div>
+            <hr />
+            <div class="btn-group">
+                <button type="submit" class="btn btn-outline-success">Valider</button>
+                <button type="button" class="btn btn-outline-danger" @onclick="Return">Annuler</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+}
