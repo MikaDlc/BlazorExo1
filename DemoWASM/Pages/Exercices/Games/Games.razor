@@ -16,7 +16,12 @@
                     <td>@g.Synopsis</td>
                     @if (@User.IsInRole("Admin"))
                     {
-                        <td class="btn-group"><button class="btn btn-danger" @onclick="Delete">Delete</button></td>
+                        <td>
+                            <p class="btn-group">
+                                <button class="btn btn-danger" disabled=@Disabled @onclick="() => Delete(g.Id)">Delete</button>
+                                <button class="btn btn-warning" disabled=@Disabled @onclick="Edit">Edit</button>
+                            </p>
+                        </td>
                     }
                 </tr>
             }

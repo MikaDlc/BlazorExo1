@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 
 namespace DemoWASM.Pages.Exercices.Games
 {
@@ -26,15 +24,9 @@ namespace DemoWASM.Pages.Exercices.Games
 
         public async Task Add()
         {
-            Client = new HttpClient();
-            Client.BaseAddress = new Uri("https://localhost:7050/api/");
             string token = await JS.InvokeAsync<string>("localStorage.getItem", "token");
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            string json = JsonSerializer.Serialize(GameForm);
-            HttpContent c = new StringContent(json, Encoding.UTF8, "application/json");
-            //HttpResponseMessage m = await Client.PostAsJsonAsync("Game", GameForm);
-            HttpResponseMessage m = await Client.PostAsync("game", c);
-            if(!m.IsSuccessStatusCode) Console.WriteLine(m.ReasonPhrase + " - " + m.StatusCode);
+            await Client.PostAsJsonAsync("Game", GameForm);
             Nav.NavigateTo("Exo3");
         }
 

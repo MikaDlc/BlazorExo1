@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Claims;
 
@@ -21,6 +22,7 @@ namespace DemoWASM.Pages.Exercices.Games
 
         public List<Game> Liste { get; set; } = new List<Game>();
         public ClaimsPrincipal? User { get; set; }
+        private bool Disabled { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,11 +39,27 @@ namespace DemoWASM.Pages.Exercices.Games
         public async Task Add()
         {
             Nav.NavigateTo("Exo3/Add");
+
         }
 
-        public async Task Delete()
+        public async Task Delete(int Id)
         {
-            
+            Disabled = true;
+            string token = await JS.InvokeAsync<string>("localStorage.getItem", "token");
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage m = await Client.DeleteAsync("Game/" + Id);
+            if (m.IsSuccessStatusCode)
+            {
+                Disabled = false;
+                Nav.Refresh();
+            }
+
+        }
+
+        public async Task Edit()
+        {
+            Nav.NavigateTo("Exo3/Add");
+            // Interceptor
         }
     }
 }
