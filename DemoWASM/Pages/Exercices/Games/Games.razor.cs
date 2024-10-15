@@ -39,7 +39,6 @@ namespace DemoWASM.Pages.Exercices.Games
         public async Task Add()
         {
             Nav.NavigateTo("Exo3/Add");
-
         }
 
         public async Task Delete(int Id)
@@ -56,9 +55,9 @@ namespace DemoWASM.Pages.Exercices.Games
 
         }
 
-        public async Task Edit()
+        public async Task Edit(int id)
         {
-            Nav.NavigateTo("Exo3/Add");
+            Nav.NavigateTo("Exo3/Add/" + id.ToString());
             // Interceptor
         }
     }

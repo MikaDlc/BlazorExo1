@@ -19,7 +19,7 @@
                         <td>
                             <p class="btn-group">
                                 <button class="btn btn-danger" disabled=@Disabled @onclick="() => Delete(g.Id)">Delete</button>
-                                <button class="btn btn-warning" disabled=@Disabled @onclick="Edit">Edit</button>
+                                <button class="btn btn-warning" disabled=@Disabled @onclick="() => Edit(g.Id)">Edit</button>
                             </p>
                         </td>
                     }

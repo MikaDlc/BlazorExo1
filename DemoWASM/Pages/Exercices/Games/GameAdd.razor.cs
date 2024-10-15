@@ -22,11 +22,37 @@ namespace DemoWASM.Pages.Exercices.Games
             GameForm = new GamePost();
         }
 
+        [Parameter]
+        public int? id { get; set; }
+        protected override async Task OnParametersSetAsync()
+        {
+            await LoadData();
+        }
+
+        public async Task LoadData()
+        {
+            if (id is not null)
+            {
+                string token = await JS.InvokeAsync<string>("localStorage.getItem", "token");
+                Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                GameForm = await Client.GetFromJsonAsync<GamePost>("Game/" + id);
+            }
+            else
+                GameForm = new GamePost();
+        }
+
         public async Task Add()
         {
             string token = await JS.InvokeAsync<string>("localStorage.getItem", "token");
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            await Client.PostAsJsonAsync("Game", GameForm);
+            if (id is not null)
+            {
+                await Client.PutAsJsonAsync("Game/" + id, GameForm);
+            }
+            else
+            {
+                await Client.PostAsJsonAsync("Game", GameForm);
+            }
             Nav.NavigateTo("Exo3");
         }
 
